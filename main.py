@@ -1,5 +1,7 @@
 from flask import Flask, render_template
 from flask_mail import Mail, Message
+import random
+import os
 
 app = Flask(__name__)
 
@@ -11,12 +13,17 @@ app.config['MAIL_PASSWORD'] = 'superbaby'
 
 mail = Mail(app)
 
+DIR_PATH = os.path.dirname(os.path.realpath(__file__))
+INSULTS_PATH = '/assets/talk.txt'
+
 @app.route('/', methods=['POST'])
 def parse_request():
+
     return 'Thanks for making a POST request!'
 
 @app.route('/', methods=['GET'])
 def home():
+    print(get_random_insult(insults))
     return render_template('index.html')
 
 @app.route('/test')
@@ -25,6 +32,18 @@ def index():
     msg.body = "I need an apology letter. Can I borrow your birth certificate?"
     mail.send(msg)
     return 'Message Sent!'
+
+def get_insult_list():
+    with open(DIR_PATH+INSULTS_PATH) as f:
+        content = f.readlines()
+    content = [x.strip() for x in content]
+    return content
+
+def get_random_insult(insults):
+    return insults[random.randint(0, len(insults))]
+
+
+insults = get_insult_list()
 
 if __name__ == '__main__':
     app.run(debug=True)
