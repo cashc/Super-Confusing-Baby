@@ -1,7 +1,8 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_mail import Mail, Message
 import random
 import os
+import pprint
 
 app = Flask(__name__)
 
@@ -19,11 +20,16 @@ INSULTS_PATH = '/assets/talk.txt'
 @app.route('/', methods=['POST'])
 def parse_request():
 
-    return 'Thanks for making a POST request!'
+    phone_num = request.form['phone_num']
+    carrier = request.form['carrier']
+
+    msg = 'Thanks for using Troll Talk!'
+    insult = get_random_insult(insults)
+    htmlInsult = 'Insult sent: '+insult
+    return render_template('index.html', message=msg, insult=htmlInsult)
 
 @app.route('/', methods=['GET'])
 def home():
-    print(get_random_insult(insults))
     return render_template('index.html')
 
 @app.route('/test')
@@ -41,6 +47,12 @@ def get_insult_list():
 
 def get_random_insult(insults):
     return insults[random.randint(0, len(insults))]
+
+def send_insult(number, carrier):
+    msg = Message('Troll Talk SMS', sender=("Troll Talk", "troll.talk.sms@gmail.com"),
+                  recipients=['2484082851@vtext.com'])
+    msg.body = "I need an apology letter. Can I borrow your birth certificate?"
+    mail.send(msg)
 
 
 insults = get_insult_list()
