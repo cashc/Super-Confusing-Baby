@@ -5,6 +5,23 @@
     <title>Troll Talk</title>
 </head>
 <body>
+ <h1> Troll Talk </h1>
 
+ <form action="{{ "/" }}" method="post">
+    <b>Phone number:</b> <br>
+    <input type="text" name= "phone_num">
+    <br>
+    <b>Carriers:</b> <br>
+    <select name="Carriers">
+      <option value="verizon">Verizon</option>
+      <option value="att">AT&T</option>
+      <option value="sprint">Sprint</option>
+      <option value="tmobile">T-mobile</option>
+      <option value="republic">Republic Wireless</option>
+    </select>
+    <br>
+    <br>
+    <input type="submit">
+</form>
 </body>
 </html>
