@@ -21,7 +21,8 @@ def home():
 
 @app.route('/test')
 def index():
-    msg = Message('Hello', sender='troll.talk.sms@gmail.com', recipients=['2484082851@vtext.com'])
+    msg = Message('Troll Talk SMS', sender=("Troll Talk", "troll.talk.sms@gmail.com"), recipients=['2484082851@vtext.com'])
+    msg.body = "I need an apology letter. Can I borrow your birth certificate?"
     mail.send(msg)
     return 'Message Sent!'
 
