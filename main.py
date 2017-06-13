@@ -25,14 +25,16 @@ def parse_request():
 
     msg = 'Thanks for using Troll Talk!'
     insult = get_random_insult(insults)
-    htmlInsult = 'Insult sent: '+insult
+    htmlInsult = 'Insult sent: ' + insult
+    send_insult(phone_num, carrier, insult)
     return render_template('index.html', message=msg, insult=htmlInsult)
+
 
 @app.route('/', methods=['GET'])
 def home():
     return render_template('index.html')
 
-@app.route('/test')
+@app.route('/sms_test')
 def index():
     msg = Message('Troll Talk SMS', sender=("Troll Talk", "troll.talk.sms@gmail.com"), recipients=['2484082851@vtext.com'])
     msg.body = "I need an apology letter. Can I borrow your birth certificate?"
@@ -46,14 +48,24 @@ def get_insult_list():
     return content
 
 def get_random_insult(insults):
-    return insults[random.randint(0, len(insults))]
+    return insults[random.randint(0, len(insults)-1)]
 
-def send_insult(number, carrier):
-    msg = Message('Troll Talk SMS', sender=("Troll Talk", "troll.talk.sms@gmail.com"),
-                  recipients=['2484082851@vtext.com'])
-    msg.body = "I need an apology letter. Can I borrow your birth certificate?"
+def get_carrier_domain(carrier):
+    carriers = {
+    'verizon':'@vzwpix.com',
+    'att':'@mms.att.net',
+    'sprint':'@pm.sprint.com',
+    'tmobile':'@tmomail.net'
+    }
+    return(carriers[carrier])
+
+def send_insult(number, carrier, insult):
+    msg = Message('Troll Talk SMS', sender=("Troll Talk", "troll.talk.sms@gmail.com"), recipients=[number + get_carrier_domain(carrier)])
+    msg.body = insult
+    with app.open_resource("image.png") as fp:
+        msg.attach("image.png", "image/png", fp.read())
     mail.send(msg)
-
+    return 'Message Sent!'
 
 insults = get_insult_list()
 
