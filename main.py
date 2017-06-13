@@ -17,6 +17,13 @@ mail = Mail(app)
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 INSULTS_PATH = '/static/talk.txt'
 
+CARRIERS = {
+    'Verizon':'@vzwpix.com',
+    'AT&T':'@mms.att.net',
+    'Sprint':'@pm.sprint.com',
+    'T-Mobile':'@tmomail.net'
+    }
+
 @app.route('/', methods=['POST'])
 def parse_request():
     phone_num = request.form['phone_num']
@@ -27,15 +34,15 @@ def parse_request():
         insult = get_random_insult(insults)
         htmlInsult = 'Insult sent: ' + insult
         send_insult(phone_num, carrier, insult)
-        return render_template('index.html', message=msg, insult=htmlInsult)
+        return render_template('index.html', carriers=CARRIERS.keys(), message=msg, insult=htmlInsult)
     else:
         error_msg = "Please input a valid phone number"
-        return render_template('index.html', message=error_msg, insult=error_msg)
+        return render_template('index.html', carriers=CARRIERS.keys(), message=error_msg, insult=error_msg)
 
 
 @app.route('/', methods=['GET'])
 def home():
-    return render_template('index.html')
+    return render_template('index.html', carriers=CARRIERS.keys())
 
 @app.route('/sms_test')
 def index():
@@ -54,13 +61,7 @@ def get_random_insult(insults):
     return insults[random.randint(0, len(insults)-1)]
 
 def get_carrier_domain(carrier):
-    carriers = {
-    'verizon':'@vzwpix.com',
-    'att':'@mms.att.net',
-    'sprint':'@pm.sprint.com',
-    'tmobile':'@tmomail.net'
-    }
-    return(carriers[carrier])
+    return(CARRIERS[carrier])
 
 def send_insult(number, carrier, insult):
     msg = Message('Troll Talk SMS', sender=("Troll Talk", "troll.talk.sms@gmail.com"), recipients=[number + get_carrier_domain(carrier)])

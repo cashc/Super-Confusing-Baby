@@ -2,31 +2,33 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <link rel="shortcut icon" href="/static/favicon.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <title>Troll Talk</title>
 </head>
 <body>
- <h1> Troll Talk </h1>
+ <h1> Troll Talk <img src="/static/favicon.png"></h1>
 
  <form action="{{ "/" }}" method="post" class="form">
     <b>Phone number:</b> <br>
-    <input type="text" name= "phone_num">
+    <input type="text" name="phone_num" id="phone_num">
     <br>
     <br>
-    <b>Carriers:</b> <br>
-    <select name="carrier">
-      <option value="verizon">Verizon</option>
-      <option value="att">AT&T</option>
-      <option value="sprint">Sprint</option>
-      <option value="tmobile">T-Mobile</option>
+    <b>Carrier:</b>
+    <br>
+    <select name="carrier" id="carrier">
+        {% for carrier in carriers %}
+            <option value="{{ carrier }}">{{ carrier }}</option>
+        {% endfor %}
     </select>
     <br>
     <br>
     <br>
-    <input type="submit" class="submit-btn">
+    <input type="submit" class="button" value="Submit">
   </form>
 
-  <div class = "insult_msg"
+  <div class = "insult_msg">
     <p>
         {{ msg }}
         {{ insult }}
