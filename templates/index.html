@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
     <meta charset="UTF-8">
     <title>Troll Talk</title>
 </head>
 <body>
  <h1> Troll Talk </h1>
 
- <form action="{{ "/" }}" method="post">
+ <form action="{{ "/" }}" method="post" class="form">
     <b>Phone number:</b> <br>
     <input type="text" name= "phone_num">
+    <br>
     <br>
     <b>Carriers:</b> <br>
     <select name="carrier">
@@ -20,12 +22,15 @@
     </select>
     <br>
     <br>
-    <input type="submit">
-</form>
+    <br>
+    <input type="submit" class="submit-btn">
+  </form>
 
-<p>
-    {{ msg }}
-    {{ insult }}
-</p>
+  <div class = "insult_msg"
+    <p>
+        {{ msg }}
+        {{ insult }}
+    </p>
+  </div>
 </body>
 </html>

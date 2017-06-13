@@ -1,0 +1,19 @@
+h1{
+  text-align: center;
+}
+
+form {
+  text-align: center;
+  padding-top: 2%;
+  padding-left: 45%
+  width: 30px;
+}
+
+.input {
+  text-align: center;
+}
+
+.insult_msg {
+  text-align: center;
+  padding-top: 1%;
+}
