@@ -65,8 +65,9 @@ def get_carrier_domain(carrier):
 def send_insult(number, carrier, insult):
     msg = Message('Troll Talk SMS', sender=("Troll Talk", "troll.talk.sms@gmail.com"), recipients=[number + get_carrier_domain(carrier)])
     msg.body = insult
-    with app.open_resource("image.png") as fp:
-        msg.attach("image.png", "image/png", fp.read())
+    file_name = "image" + str(random.randint(0, 5)) + ".png"
+    with app.open_resource(file_name) as fp:
+        msg.attach(file_name, "image/png", fp.read())
     mail.send(msg)
     return 'Message Sent!'
 
