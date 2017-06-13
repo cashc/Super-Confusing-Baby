@@ -19,20 +19,16 @@ INSULTS_PATH = '/static/talk.txt'
 
 @app.route('/', methods=['POST'])
 def parse_request():
-
     phone_num = request.form['phone_num']
     carrier = request.form['carrier']
     phone_num = phone_num.replace('-', '')
-    import pdb;
     if (phone_num.isdigit() and len(phone_num) == 10):
-        print (phone_num)
         msg = 'Thanks for using Troll Talk!'
         insult = get_random_insult(insults)
         htmlInsult = 'Insult sent: ' + insult
         send_insult(phone_num, carrier, insult)
         return render_template('index.html', message=msg, insult=htmlInsult)
     else:
-        print (phone_num)
         error_msg = "Please input a valid phone number"
         return render_template('index.html', message=error_msg, insult=error_msg)
 
