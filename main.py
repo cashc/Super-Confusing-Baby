@@ -15,7 +15,7 @@ app.config['MAIL_PASSWORD'] = 'superbaby'
 mail = Mail(app)
 
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
-INSULTS_PATH = '/assets/talk.txt'
+INSULTS_PATH = '/static/talk.txt'
 
 @app.route('/', methods=['POST'])
 def parse_request():
