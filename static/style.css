@@ -5,15 +5,18 @@ h1{
 form {
   text-align: center;
   padding-top: 2%;
-  padding-left: 45%
-  width: 30px;
+}
+b {
+  font-size: 20px;
 }
 
 .input {
   text-align: center;
+  width: 100px;
+  background-color: green;
 }
 
 .insult_msg {
   text-align: center;
-  padding-top: 1%;
+  padding-top: 3%;
 }
